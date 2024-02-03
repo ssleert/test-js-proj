@@ -13,14 +13,14 @@ const routerContext = initRouter({
 })
 
 const App = () => {
-  return <>
+  return <div>
     <NavBar
       pages={pages}
     />
     <div className={styles.main}>
       <Router context={routerContext} />
     </div>
-  </>
+  </div>
 }
 
 window.document.getElementById("app").append(<App />)

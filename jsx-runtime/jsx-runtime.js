@@ -2,27 +2,33 @@ const unpairedTags = new Set([
   "hr", "br", "input", "meta"
 ])
 
-export const Fragment = (_) => _
+const elementAppendChildren = (element, children, attributes) => {
+  if (children instanceof Array) {
+    for (const child of children) {
+      if (child instanceof Array) {
+        element.append(...child)
+      } else {
+        element.append(child)
+      }
+    }
+  } else {
+    element.append(children)
+  }
+  return element
+}
+
+export const Fragment = (_) => undefined
 export const jsx = (tagName, { children, ...attributes }) => {
   if (tagName === Fragment) {
-    const divElement = document.createElement("div")
     if (children instanceof Array) {
-      for (const child of children) {
-        if (child instanceof Array) {
-          divElement.append(...child)
-        } else {
-          divElement.append(child)
-        }
-      }
+      return children
     } else {
-      divElement.append(children)
+      return [children]
     }
-    return divElement
   }
   if (tagName instanceof Function) {
     return tagName(attributes)
   }
-
 
   const element = document.createElement(tagName)
   if (attributes) {
@@ -45,23 +51,11 @@ export const jsx = (tagName, { children, ...attributes }) => {
     return element
   }
 
-  if (children == undefined) {
+  if (children === undefined) {
     return element
   }
 
-  if (children instanceof Array) {
-    for (const child of children) {
-      if (child instanceof Array) {
-        element.append(...child)
-      } else {
-        element.append(child)
-      }
-    }
-  } else {
-    element.append(children)
-  }
-
-  return element
+  return elementAppendChildren(element, children, attributes) 
 }
 
 export { jsx as jsxs }

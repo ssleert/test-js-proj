@@ -21,6 +21,10 @@ export const initRouter = ({pages, executePages}) => {
     });
   });
 
+  window.addEventListener("popstate", e => {
+    navigateTo(e.target.href)
+  })
+
   routerGlobalContext = routerContext
   return routerContext
 }
