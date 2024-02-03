@@ -1,0 +1,25 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--navbar-width);
+  height: 100vh;
+  background: #222222;
+  font-size: 18px;
+}
+
+.link {
+  display: block;
+  padding: 12px 18px;
+  text-decoration: none;
+  color: #eeeeee;
+  font-weight: 500;
+}
+
+.link:hover {
+  background: rgba(255, 255, 255, 0.05)
+}
+
+.link:active {
+  background: rgba(255, 255, 255, 0.10)
+}

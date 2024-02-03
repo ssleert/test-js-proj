@@ -1,0 +1,19 @@
+{
+  "name": "mdedit",
+  "module": "app/index.jsx",
+  "dependencies": {
+    "jsx-runtime": "link:jsx-runtime"
+  },
+  "devDependencies": {
+    "bun-lightningcss": "latest",
+    "eslint": "latest",
+    "google-closure-compiler": "^20230802.0.0"
+  },
+  "scripts": {
+    "build": "NODE_ENV=production bun ./build.js release",
+    "build-dev": "NODE_ENV=production bun ./build.js dev",
+    "lint": "bun x eslint ./app",
+    "check-syntax": "NODE_ENV=production bun build ./app/index.jsx"
+  },
+  "type": "module"
+}

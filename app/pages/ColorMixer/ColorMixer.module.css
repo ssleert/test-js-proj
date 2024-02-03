@@ -1,0 +1,11 @@
+.colorView {
+  display: block;
+  width: 180px;
+  height: 100px;
+  background: #000;
+  margin-bottom: 20px;
+}
+
+.slider {
+  display: block;
+}
