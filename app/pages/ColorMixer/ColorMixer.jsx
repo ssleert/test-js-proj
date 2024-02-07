@@ -1,6 +1,6 @@
 import typographyStyles from "../../styles/typography.module.css"
 import styles from "./ColorMixer.module.css"
-import { renderEffect } from "../../renderEffect/renderEffect.js"
+import { renderEffect } from "../../reactive/reactive.js"
 
 const minColorInt = 0
 const maxColorInt = 255

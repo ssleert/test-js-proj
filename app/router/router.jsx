@@ -15,8 +15,8 @@ export const initRouter = ({pages, executePages}) => {
   document.addEventListener("DOMContentLoaded", () => {
     document.body.addEventListener("click", e => {
       if (e.target.matches("[data-link]")) {
-        e.preventDefault();
-        navigateTo(e.target.href);
+        e.preventDefault()
+        navigateTo(e.target.href)
       }
     });
   });
@@ -31,8 +31,17 @@ export const initRouter = ({pages, executePages}) => {
 
 const setRoutePage = context => {
   const routerElement = document.getElementById(routerElementId)
+  const page = context.executePages 
+      ? context.routeTarget.view() 
+      : context.routeTarget.view
+
   routerElement.innerHTML = ""
-  routerElement.append(context.executePages ? context.routeTarget.view() : context.routeTarget.view)
+
+  if (page instanceof Array) {
+    routerElement.append(...page)
+    return
+  }
+  routerElement.append(page)
 }
 
 export const navigateTo = url => {
@@ -56,7 +65,6 @@ const setRouterTarget = context => {
     match => match.result !== null
   ) ?? {
     route: routes[0],
-    result: [location.pathname],
   }
 
   context.routeTarget = match.route

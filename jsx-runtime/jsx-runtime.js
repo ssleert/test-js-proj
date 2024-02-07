@@ -7,12 +7,29 @@ const elementAppendChildren = (element, children, attributes) => {
     for (const child of children) {
       if (child instanceof Array) {
         element.append(...child)
+      } else if (child?.__name === "reactiveVal") {
+        element.append(child)
+        const lastChildNodeIndex = element.childNodes.length - 1
+        child.subscribe = () => {
+          element.childNodes[lastChildNodeIndex].replaceWith(child.val)
+        }
+        element.childNodes[lastChildNodeIndex].replaceWith(child.val)
       } else {
         element.append(child)
       }
     }
   } else {
-    element.append(children)
+    const child = children
+    if (child?.__name === "reactiveVal") {
+      element.append(child)
+      const lastChildNodeIndex = element.childNodes.length - 1
+      child.subscribe = () => {
+        element.childNodes[lastChildNodeIndex].replaceWith(child.val)
+      }
+      element.childNodes[lastChildNodeIndex].replaceWith(child.val)
+    } else {
+      element.append(child)
+    }
   }
   return element
 }
@@ -37,7 +54,6 @@ export const jsx = (tagName, { children, ...attributes }) => {
         element.setAttribute("class", attributes[key])
         continue
       }
-
       const eventName = key.match(/^on([A-Z]\w+)$/)
       if (eventName) {
         element.addEventListener(eventName[1].toLowerCase(), attributes[key])
@@ -55,7 +71,7 @@ export const jsx = (tagName, { children, ...attributes }) => {
     return element
   }
 
-  return elementAppendChildren(element, children, attributes) 
+  return elementAppendChildren(element, children, attributes)
 }
 
 export { jsx as jsxs }
